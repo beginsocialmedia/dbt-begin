@@ -1,0 +1,161 @@
+version: 2
+
+models:
+
+  - name: media
+    materialized: table
+    columns:
+
+      - name: username
+        type: text
+        tests:
+          - not_null
+
+      - name: score
+        type: bigint
+        tests:
+          - not_null
+
+      - name: like_count
+        type: bigint
+        tests:
+          - not_null
+
+      - name: comments_count
+        type: bigint
+        tests:
+          - not_null
+
+      - name: saved
+        type: bigint
+        tests:
+          - not_null
+
+      - name: engagement
+        type: bigint
+
+      - name: plays
+        type: bigint
+        tests:
+          - not_null
+
+      - name: reach
+        type: bigint
+        tests:
+          - not_null
+
+      - name: impressions
+        type: bigint
+        tests:
+          - not_null
+
+      - name: permalink
+        type: text
+
+      - name: id
+        type: bigint
+        tests:
+          - not_null
+        unique_key: true
+
+      - name: media_url
+        type: text
+
+      - name: media_type
+        type: text
+
+
+  - name: user_insights
+    materialized: table
+    columns:
+
+      - name: username
+        type: text
+        tests:
+          - not_null
+
+      - name: reach
+        type: bigint
+        tests:
+          - not_null
+
+      - name: impressions
+        type: bigint
+        tests:
+          - not_null
+
+      - name: website_clicks
+        type: bigint
+        tests:
+          - not_null
+
+      - name: profile_views
+        type: bigint
+        tests:
+          - not_null
+
+      - name: follower_count
+        type: bigint
+        tests:
+          - not_null
+
+      - name: date
+        type: bigint
+        tests:
+          - not_null
+        unique_key: true
+
+  - name: user_lifetime_insights
+    materialized: table
+    columns:
+
+      - name: page_id
+        type: text
+        tests:
+          - not_null
+
+      - name: metric
+        type: text
+        tests:
+          - not_null
+
+      - name: business_account_id
+        type: text
+
+      - name: value
+        type: jsonb
+        tests:
+          - not_null
+
+  - name: users
+    materialized: table
+    columns:
+
+      - name: username
+        type: text
+        tests:
+          - not_null
+
+      - name: followers_count
+        type: bigint
+        tests:
+          - not_null
+
+      - name: media_count
+        type: bigint
+        tests:
+          - not_null
+
+      - name: profile_picture_url
+        type: text
+
+      - name: name
+        type: text
+
+      - name: biography
+        type: text
+
+      - name: id
+        type: text
+        tests:
+          - not_null
