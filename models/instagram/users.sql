@@ -6,7 +6,7 @@ WITH user_data AS (
            u.name,
            u.biography,
            u.id
-    FROM begin_db.instagram_raw.users AS u
+    FROM `begin-data.instagram_raw.users` AS u
 )
 SELECT *
 FROM user_data

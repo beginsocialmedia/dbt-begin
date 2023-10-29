@@ -3,7 +3,7 @@ WITH user_lifetime_insights AS (
            metric,
            business_account_id,
            "value"
-    FROM begin_db.instagram_raw.user_lifetime_insights
+    FROM `begin-data.instagram_raw.user_lifetime_insights`
 )
 
 SELECT *

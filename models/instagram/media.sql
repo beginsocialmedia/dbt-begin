@@ -12,11 +12,11 @@ WITH stg_media as (
            mi.impressions,
            m.media_type,
            m.timestamp
-    FROM begin_db.instagram_raw.media AS m
-    LEFT JOIN begin_db.instagram_raw.media_insights AS mi
+    FROM `begin-data.instagram_raw.media` AS m
+    LEFT JOIN `begin-data.instagram_raw.media_insights` AS mi
            ON m.id = mi.id
     WHERE (m.id NOT IN (SELECT id
-                        FROM begin_db.instagram_raw.stories))
+                        FROM `begin-data.instagram_raw.stories`))
        OR (m.like_count IS NULL)
        OR (m.comments_count IS NULL)
 ),
@@ -39,7 +39,7 @@ stg_media_2 as (
            md.media_type,
            md.timestamp
     FROM stg_media AS md
-    LEFT JOIN begin_db.instagram_raw.users as users
+    LEFT JOIN `begin-data.instagram_raw.users` as users
            ON md.business_account_id = users.id
     -- WHERE username = 'beginsocialmedia' -- profile filtering
 ),
@@ -66,7 +66,7 @@ media as (
            md.id,
            md.media_url,
            md.media_type,
-           md.timestamp AS "date"
+           md.timestamp AS date
     FROM stg_media_2 as md
 )
 
