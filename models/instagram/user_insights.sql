@@ -6,8 +6,8 @@ WITH user_insights AS (
            COALESCE(ui.profile_views, 0) AS profile_views,
            COALESCE(ui. follower_count) AS follower_count,
            "date"
-    FROM begin_db.instagram_raw.users AS u
-    LEFT JOIN begin_db.instagram_raw.user_insights AS ui
+    FROM `begin-data.instagram_raw.users` AS u
+    LEFT JOIN `begin-data.instagram_raw.user_insights` AS ui
     ON u.id = ui.business_account_id
 )
 SELECT *
