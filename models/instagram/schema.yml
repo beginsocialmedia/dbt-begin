@@ -12,7 +12,7 @@ models:
       - name: score
         type: bigint
         tests:
-          - not_null:
+          - not_null
 
       - name: like_count
         type: bigint
@@ -53,7 +53,7 @@ models:
       - name: id
         type: bigint
         tests:
-          - not_null:
+          - not_null
 
         unique_key: true
 
