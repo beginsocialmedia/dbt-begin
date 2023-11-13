@@ -46,8 +46,7 @@ stg_media_2 as (
         on md.business_account_id = users.id
     where
         md.saved is not null
-        and md.score is not null
-        and md.username is not null
+        and users.username is not null
         and md.id is not null
 ),
 
