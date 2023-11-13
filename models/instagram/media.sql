@@ -24,27 +24,32 @@ with
     ),
 
     -- First CTE Above
-    stg_media_2 as (
-        select
-            users.username,
-            md.like_count,
-            md.comments_count,
-            md.saved,
-            md.shares,
-            md.plays,
-            md.id,
-            md.permalink,
-            users.followers_count,
-            md.media_url,
-            md.reach,
-            md.impressions,
-            md.media_type,
-            md.timestamp
-        from stg_media as md
-        left join
-            `begin-data.instagram_raw.users` as users
-            on md.business_account_id = users.id
-    ),
+stg_media_2 as (
+    select
+        users.username,
+        md.like_count,
+        md.comments_count,
+        md.saved,
+        md.shares,
+        md.plays,
+        md.id,
+        md.permalink,
+        users.followers_count,
+        md.media_url,
+        md.reach,
+        md.impressions,
+        md.media_type,
+        md.timestamp
+    from stg_media as md
+    left join
+        `begin-data.instagram_raw.users` as users
+        on md.business_account_id = users.id
+    where
+        md.saved is not null
+        and md.score is not null
+        and md.username is not null
+        and md.id is not null
+),
 
     -- Second CTE Above
     media as (
