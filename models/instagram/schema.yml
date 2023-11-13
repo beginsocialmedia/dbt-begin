@@ -8,13 +8,9 @@ models:
 
       - name: username
         type: text
-        tests:
-          - not_null
 
       - name: score
         type: bigint
-        tests:
-          - not_null
 
       - name: like_count
         type: bigint
@@ -28,8 +24,7 @@ models:
 
       - name: saved
         type: bigint
-        tests:
-          - not_null
+
 
       - name: engagement
         type: bigint
@@ -54,8 +49,7 @@ models:
 
       - name: id
         type: bigint
-        tests:
-          - not_null
+
         unique_key: true
 
       - name: media_url
