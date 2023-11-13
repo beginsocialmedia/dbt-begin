@@ -20,6 +20,7 @@ with
             (m.id not in (select id from `begin-data.instagram_raw.stories`))
             or (m.like_count is null)
             or (m.comments_count is null)
+            or (m.id is null)
     ),
 
     -- First CTE Above
@@ -43,7 +44,6 @@ with
         left join
             `begin-data.instagram_raw.users` as users
             on md.business_account_id = users.id
-    -- WHERE username = 'beginsocialmedia' -- profile filtering
     ),
 
     -- Second CTE Above
