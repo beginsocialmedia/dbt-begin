@@ -9,13 +9,15 @@ with
             mi.id,
             m.permalink,
             mi.business_account_id,
-            m.media_url,
-            mi.reach,
-            mi.impressions,
+            coalesce(m.thumbnail_url, m.media_url) as media_url,
+            coalesce(mi.reach, mi.carousel_album_reach) as reach,
+            coalesce(mi.impressions, mi.carousel_album_impressions) as impressions,
+            coalesce(mi.total_interactions, mi.carousel_album_engagement, mi.engagement) as engagement,
             m.media_type,
             m.timestamp
-        from `begin-data.instagram_raw.media` as m
-        left join `begin-data.instagram_raw.media_insights` as mi on m.id = mi.id
+        from `begin-data.instagram_raw.media` m
+        left join `begin-data.instagram_raw.media_insights` mi 
+        on m.id = mi.id
         where
             (m.id not in (select id from `begin-data.instagram_raw.stories`))
             or (m.like_count is not null)
@@ -38,6 +40,7 @@ stg_media_2 as (
         md.media_url,
         md.reach,
         md.impressions,
+        md.engagement,
         md.media_type,
         md.timestamp
     from stg_media as md
@@ -63,10 +66,7 @@ stg_media_2 as (
             md.comments_count,
             md.saved,
             coalesce(md.shares, 0) as shares,
-            coalesce(md.like_count, 0)
-            + coalesce(md.comments_count, 0)
-            + coalesce(md.saved, 0)
-            + coalesce(shares, 0) as engagement,
+            md.engagement,
             coalesce(md.plays, 0) as plays,
             coalesce(md.reach, 0) as reach,
             coalesce(md.impressions, 0) as impressions,
