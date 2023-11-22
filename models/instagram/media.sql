@@ -11,7 +11,7 @@ with
             mi.business_account_id,
             coalesce(m.thumbnail_url, m.media_url) as media_url,
             coalesce(mi.reach, mi.carousel_album_reach) as reach,
-            coalesce(mi.impressions, mi.carousel_album_impressions) as impressions,
+            coalesce(mi.impressions, mi.carousel_album_impressions, mi.plays) as impressions,
             coalesce(mi.total_interactions, mi.carousel_album_engagement, mi.engagement) as engagement,
             m.media_type,
             m.timestamp
