@@ -9,6 +9,8 @@ with
             mi.id,
             m.permalink,
             mi.business_account_id,
+            coalesce(mi.ig_reels_avg_watch_time, 0) as reels_avg_watch_time,
+            coalesce(mi.ig_reels_video_view_total_time, 0) as reels_video_view_total_time,
             coalesce(m.thumbnail_url, m.media_url) as media_url,
             coalesce(mi.reach, 0) as reach,
             coalesce(mi.impressions, mi.plays) as impressions,
@@ -40,6 +42,8 @@ stg_media_2 as (
         md.reach,
         md.impressions,
         md.engagement,
+        reels_avg_watch_time,
+        reels_video_view_total_time,
         md.media_type,
         md.timestamp
     from stg_media as md
@@ -69,6 +73,8 @@ stg_media_2 as (
             coalesce(md.plays, 0) as plays,
             coalesce(md.reach, 0) as reach,
             coalesce(md.impressions, 0) as impressions,
+            reels_avg_watch_time,
+            reels_video_view_total_time,
             md.permalink,
             md.id,
             md.media_url,
