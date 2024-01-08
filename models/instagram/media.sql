@@ -10,9 +10,9 @@ with
             m.permalink,
             mi.business_account_id,
             coalesce(m.thumbnail_url, m.media_url) as media_url,
-            mi.reach,
+            coalesce(mi.reach, 0) as reach,
             coalesce(mi.impressions, mi.plays) as impressions,
-            mi.total_interactions as engagement,
+            coalesce(mi.total_interactions, 0) as engagement,
             m.media_type,
             m.timestamp
         from `begin-data.instagram_raw.media` m
