@@ -10,17 +10,16 @@ with
             m.permalink,
             mi.business_account_id,
             coalesce(m.thumbnail_url, m.media_url) as media_url,
-            coalesce(mi.reach, mi.carousel_album_reach) as reach,
-            coalesce(mi.impressions, mi.carousel_album_impressions, mi.plays) as impressions,
-            coalesce(mi.total_interactions, mi.carousel_album_engagement, mi.engagement) as engagement,
+            mi.reach,
+            coalesce(mi.impressions, mi.plays) as impressions,
+            mi.total_interactions as engagement,
             m.media_type,
             m.timestamp
         from `begin-data.instagram_raw.media` m
         left join `begin-data.instagram_raw.media_insights` mi 
         on m.id = mi.id
         where
-            (m.id not in (select id from `begin-data.instagram_raw.stories`))
-            or (m.like_count is not null)
+            (m.like_count is not null)
             or (m.comments_count is not null)
             or (m.id is not null)
     ),
