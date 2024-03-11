@@ -9,12 +9,12 @@ with
             mi.id,
             m.permalink,
             mi.business_account_id,
-            coalesce(mi.ig_reels_avg_watch_time, 0) as reels_avg_watch_time,
-            coalesce(mi.ig_reels_video_view_total_time, 0) as reels_video_view_total_time,
-            coalesce(m.thumbnail_url, m.media_url) as media_url,
-            coalesce(mi.reach, 0) as reach,
-            coalesce(mi.impressions, mi.plays) as impressions,
-            coalesce(mi.total_interactions, 0) as engagement,
+            ROUND(COALESCE(mi.ig_reels_avg_watch_time, 0) / 1000.0, 2) as reels_avg_watch_time,
+            ROUND(COALESCE(mi.ig_reels_video_view_total_time, 0) / 1000.0, 2) as reels_video_view_total_time,
+            COALESCE(m.thumbnail_url, m.media_url) as media_url,
+            COALESCE(mi.reach, 0) as reach,
+            COALESCE(mi.impressions, mi.plays) as impressions,
+            COALESCE(mi.total_interactions, 0) as engagement,
             m.media_type,
             m.timestamp
         from `begin-data.instagram_raw.media` m
@@ -27,34 +27,34 @@ with
     ),
 
     -- First CTE Above
-stg_media_2 as (
-    select
-        users.username,
-        md.like_count,
-        md.comments_count,
-        md.saved,
-        md.shares,
-        md.plays,
-        md.id,
-        md.permalink,
-        users.followers_count,
-        md.media_url,
-        md.reach,
-        md.impressions,
-        md.engagement,
-        reels_avg_watch_time,
-        reels_video_view_total_time,
-        md.media_type,
-        md.timestamp
-    from stg_media as md
-    left join
-        `begin-data.instagram_raw.users` as users
-        on md.business_account_id = users.id
-    where
-        md.saved is not null
-        and users.username is not null
-        and md.id is not null
-),
+    stg_media_2 as (
+        select
+            users.username,
+            md.like_count,
+            md.comments_count,
+            md.saved,
+            md.shares,
+            md.plays,
+            md.id,
+            md.permalink,
+            users.followers_count,
+            md.media_url,
+            md.reach,
+            md.impressions,
+            md.engagement,
+            reels_avg_watch_time,
+            reels_video_view_total_time,
+            md.media_type,
+            md.timestamp
+        from stg_media as md
+        left join
+            `begin-data.instagram_raw.users` as users
+            on md.business_account_id = users.id
+        where
+            md.saved is not null
+            and users.username is not null
+            and md.id is not null
+    ),
 
     -- Second CTE Above
     media as (
